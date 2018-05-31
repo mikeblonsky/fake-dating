@@ -16,4 +16,4 @@ const store = createStore(reducers, compose(
 
 ReactDOM.render(<Provider store={store}>
   <App />
-</Provider>, document.querySelector('.container'));
+</Provider>, document.querySelector('.page'));

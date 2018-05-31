@@ -1,17 +1,34 @@
 .main-app-container {
-    width: 1000px;
-    margin: 0 auto;
+    width: 100%;
 }
-.container {
-    width: 1000px;
+.header__wrapper {
+    width: 100%;
+    background-color: tomato;
+}
+.card.card__color {
+    background-color: rgb(251, 216, 210) ;
+}
+a.nav-link {
+    font-weight: bold;
+    color: #fff;
+}
+.header {
+    margin: 0 auto;
+    width: 800px;
+    padding: 0 0 70px 0;
+    overflow: hidden;
+}
+.submit__wrapper .btn {
+    background-color: rgb(255, 137, 119);
+    border-color: rgb(245, 70, 43);
+}
+.main__content {
+    width: 800px;
+    margin: 0 auto;
 }
 
 .navigation {
     padding: 50px 0;
-}
-
-.header {
-    border: 1px solid red;
 }
 
 .submitSearch {
@@ -33,4 +50,29 @@
 .persons__list__item p {
     text-align: center;
     padding-top: 10px;
+}
+
+.wrap__pagination {
+    display: flex;
+    justify-content: center;
+}
+.submit__wrapper {
+    display: flex;
+    padding: 10px 0;
+    justify-content: center;
+}
+.text-special {
+    text-align: center;
+}
+.logo {
+    width: 200px;
+}
+.header__panels {
+    margin: 20px 0 30px 0;
+    display: flex;
+    justify-content: space-between;
+}
+.search__block {
+    width: 800px;
+    margin: 0 auto;
 }
