@@ -5,14 +5,21 @@ import { connect } from "react-redux";
 // actions
 import { fetchUsers } from "../actions/actions_index";
 
+// components
+import Header from "./header";
+import Container from "./container";
+
 class App extends Component {
-	componentDidMount() {
+	componentWillMount() {
 		this.props.fetchUsers();
 	}
 	render() {
-		console.log("users: ", this.props.users);
+		console.log("users: ", this.props.users && this.props.users);
 		return (
-			<div>React simple starter</div>
+			<div className="main-app-container">
+				<Header />
+				<Container />
+			</div>
 		);
 	}
 }
