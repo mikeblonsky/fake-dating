@@ -1,41 +1,21 @@
 import React from "react";
+import { Loader } from "../utils/helpers";
 
 export default class Container extends React.Component {
     render() {
+
+        const {
+            users
+        } = this.props;
+
         return <div className="main__content">
             <div className="persons__list">
-                <div className="persons__list__item">
-                    <img src="https://www.czmcam.org/wp-content/uploads/2017/02/Vintage-kitchen-decor-kitchen-traditional-with-tile-backsplash-dark-wood-floors-2-200x180.jpg" alt="Card image cap" />
-                    <p>Nadia Kowalska</p>
-                </div>
-                <div className="persons__list__item">
-                    <img src="https://www.czmcam.org/wp-content/uploads/2017/02/Vintage-kitchen-decor-kitchen-traditional-with-tile-backsplash-dark-wood-floors-2-200x180.jpg" alt="Card image cap" />
-                    <p>Nadia Kowalska</p>
-                </div>
-                <div className="persons__list__item">
-                    <img src="https://www.czmcam.org/wp-content/uploads/2017/02/Vintage-kitchen-decor-kitchen-traditional-with-tile-backsplash-dark-wood-floors-2-200x180.jpg" alt="Card image cap" />
-                    <p>Nadia Kowalska</p>
-                </div>
-                <div className="persons__list__item">
-                    <img src="https://www.czmcam.org/wp-content/uploads/2017/02/Vintage-kitchen-decor-kitchen-traditional-with-tile-backsplash-dark-wood-floors-2-200x180.jpg" alt="Card image cap" />
-                    <p>Nadia Kowalska</p>
-                </div>
-                <div className="persons__list__item">
-                    <img src="https://www.czmcam.org/wp-content/uploads/2017/02/Vintage-kitchen-decor-kitchen-traditional-with-tile-backsplash-dark-wood-floors-2-200x180.jpg" alt="Card image cap" />
-                    <p>Nadia Kowalska</p>
-                </div>
-                <div className="persons__list__item">
-                    <img src="https://www.czmcam.org/wp-content/uploads/2017/02/Vintage-kitchen-decor-kitchen-traditional-with-tile-backsplash-dark-wood-floors-2-200x180.jpg" alt="Card image cap" />
-                    <p>Nadia Kowalska</p>
-                </div>
-                <div className="persons__list__item">
-                    <img src="https://www.czmcam.org/wp-content/uploads/2017/02/Vintage-kitchen-decor-kitchen-traditional-with-tile-backsplash-dark-wood-floors-2-200x180.jpg" alt="Card image cap" />
-                    <p>Nadia Kowalska</p>
-                </div>
-                <div className="persons__list__item">
-                    <img src="https://www.czmcam.org/wp-content/uploads/2017/02/Vintage-kitchen-decor-kitchen-traditional-with-tile-backsplash-dark-wood-floors-2-200x180.jpg" alt="Card image cap" />
-                    <p>Nadia Kowalska</p>
-                </div>
+                {users ? users.map((user, index) => {
+                    return <div key={index} className="persons__list__item">
+                        <img src={user.picture.large} alt={user.name.first} />
+                        <p>{user.name.first} {user.name.last}</p>
+                    </div>
+                }) : <Loader />}
             </div>
 
             <nav className="wrap__pagination">

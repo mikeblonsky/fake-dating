@@ -11,14 +11,16 @@ import Container from "./container";
 
 class App extends Component {
 	componentWillMount() {
-		this.props.fetchUsers();
+		this.props.fetchUsers({"number": 8, gender: "female", nat: "ES"});
 	}
 	render() {
 		console.log("users: ", this.props.users && this.props.users);
 		return (
 			<div className="main-app-container">
 				<Header />
-				<Container />
+				<Container 
+					users={this.props.users}
+				/>
 			</div>
 		);
 	}
