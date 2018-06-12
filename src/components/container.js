@@ -1,12 +1,45 @@
 import React from "react";
 import { Loader } from "../utils/helpers";
+import { connect } from "react-redux";
 
-export default class Container extends React.Component {
+const PAGIN_COUNT = 8;
+
+class Container extends React.Component {
+    constructor() {
+        super();
+        
+        this.state = {
+            "paginCounter": 0,
+            "pagin": 8,
+            "users": []
+        }
+    }
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            "users": nextProps.users
+        });
+    }
+    pagination = (event, type) => {
+        event.preventDefault();
+        
+        const { users } = this.state;
+
+        if (type === "next") {
+            this.setState({
+                "paginCounter": this.state.paginCounter + PAGIN_COUNT,
+                "pagin": this.state.pagin + PAGIN_COUNT
+            });
+        }
+
+        if (type === "prev") {
+            this.setState({
+                "paginCounter": this.state.paginCounter - PAGIN_COUNT,
+                "pagin": this.state.pagin - PAGIN_COUNT
+            });
+        }
+    }
     render() {
-
-        const {
-            users
-        } = this.props;
+        const { users } = this.state;
 
         return <div className="main__content">
             <div className="persons__list">
@@ -15,18 +48,36 @@ export default class Container extends React.Component {
                         <img src={user.picture.large} alt={user.name.first} />
                         <p>{user.name.first} {user.name.last}</p>
                     </div>
-                }) : <Loader />}
+                }).slice(this.state.paginCounter, this.state.pagin) : <Loader />}
             </div>
 
             <nav className="wrap__pagination">
                 <ul className="pagination">
-                    <li className="page-item"><a className="page-link" href="#">Previous</a></li>
-                    <li className="page-item"><a className="page-link" href="#">1</a></li>
-                    <li className="page-item"><a className="page-link" href="#">2</a></li>
-                    <li className="page-item"><a className="page-link" href="#">3</a></li>
-                    <li className="page-item"><a className="page-link" href="#">Next</a></li>
+                    {this.state.paginCounter > 0 && (
+                        <li className="page-item">
+                            <a className="page-link" href="#" onClick={(event) => this.pagination(event, "prev")}>
+                                Previous
+                            </a>
+                        </li>
+                    )}
+                    
+                    {this.state.pagin < this.state.users.length && (
+                        <li className="page-item">
+                            <a className="page-link" href="#" onClick={(event) => this.pagination(event, "next")}>
+                                Next
+                            </a>
+                        </li>
+                    )}
                 </ul>
             </nav>
         </div>;
     }
 }
+
+function mapStateToProps(state) {
+	return {
+		users: state.users
+	}
+}
+
+export default connect(mapStateToProps)(Container);
