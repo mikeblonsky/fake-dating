@@ -9,67 +9,70 @@ class Container extends React.Component {
         super();
         
         this.state = {
-            "paginCounter": 0,
-            "pagin": 8,
+            "pageNumber": 0,
+            "maxPaginLength": "",
             "users": []
         }
     }
     componentWillReceiveProps(nextProps) {
         this.setState({
             "users": nextProps.users
+        }, () => {
+            this.setState({
+                "maxPaginLength": Math.floor(this.state.users.length / PAGIN_COUNT),
+            })
         });
     }
-    pagination = (event, type) => {
+    handlePrevius = (event) => {
         event.preventDefault();
-        
-        const { users } = this.state;
+        this.setState({
+            "pageNumber": this.state.pageNumber - 1
+        });
+    }
+    handleNext = (event) => {
+        event.preventDefault();
+        this.setState({
+            "pageNumber": this.state.pageNumber + 1
+        });
+    }
+    renderElements = () => {
+        const { pageNumber, users } = this.state;
 
-        if (type === "next") {
-            this.setState({
-                "paginCounter": this.state.paginCounter + PAGIN_COUNT,
-                "pagin": this.state.pagin + PAGIN_COUNT
-            });
-        }
+        const start = pageNumber * PAGIN_COUNT;
+        const end = start + PAGIN_COUNT;
 
-        if (type === "prev") {
-            this.setState({
-                "paginCounter": this.state.paginCounter - PAGIN_COUNT,
-                "pagin": this.state.pagin - PAGIN_COUNT
-            });
-        }
+        return users ? users.map((user, index) => {
+            return <div key={index} className="persons__list__item">
+                <img src={user.picture.large} alt={user.name.first} />
+                <p>{user.name.first} {user.name.last}</p>
+            </div>
+        }).slice(start, end) : <Loader />
     }
     render() {
-        const { users } = this.state;
-
+        console.log("pageNumber", this.state.pageNumber);
         return <div className="main__content">
-            <div className="persons__list">
-                {users ? users.map((user, index) => {
-                    return <div key={index} className="persons__list__item">
-                        <img src={user.picture.large} alt={user.name.first} />
-                        <p>{user.name.first} {user.name.last}</p>
-                    </div>
-                }).slice(this.state.paginCounter, this.state.pagin) : <Loader />}
-            </div>
-
             <nav className="wrap__pagination">
                 <ul className="pagination">
-                    {this.state.paginCounter > 0 && (
+                    {this.state.pageNumber !== 0 && (
                         <li className="page-item">
-                            <a className="page-link" href="#" onClick={(event) => this.pagination(event, "prev")}>
+                            <a className="page-link" href="#" onClick={(event) => this.handlePrevius(event)}>
                                 Previous
                             </a>
                         </li>
                     )}
-                    
-                    {this.state.pagin < this.state.users.length && (
+                    {(this.state.pageNumber <= this.state.maxPaginLength - 1) && (
                         <li className="page-item">
-                            <a className="page-link" href="#" onClick={(event) => this.pagination(event, "next")}>
+                            <a className="page-link" href="#" onClick={(event) => this.handleNext(event)}>
                                 Next
                             </a>
                         </li>
                     )}
                 </ul>
             </nav>
+
+            <div className="persons__list">
+                {this.renderElements()}
+            </div> 
         </div>;
     }
 }
