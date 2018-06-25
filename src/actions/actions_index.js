@@ -20,3 +20,14 @@ export function fetchUsers(options) {
         payload: request
     }
 }
+
+export const getUsersByGender = (gender) => {
+    return function(dispatch) {
+        axios.get(`https://randomuser.me/api/?gender=${gender}`).then(
+            response => dispatch({
+                type: constans.actionType.GET_GENDER,
+                payload: response.data.results
+            })
+        )   
+    }
+};

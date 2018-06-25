@@ -13,12 +13,9 @@ class App extends Component {
 	componentWillMount() {
 		this.props.fetchUsers({"number": 10, gender: "female", nat: "ES"});
 	}
-	componentDidMount() {
-		console.log("users: ", this.props.users && this.props.users);
-	}
 	render() {
 		return (
-			<div className="main-app-container">
+			<div>
 				<Header 
 					fetchUsers={this.props.fetchUsers}
 				/>
